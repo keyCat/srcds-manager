@@ -1,0 +1,42 @@
+#############################################################################################
+##                                                                                         ##
+## Copy this file to the linux user home directory in order for CLI to find automatically: ##
+## ~/srcds.yaml                                                                            ##
+##                                                                                         ##
+#############################################################################################
+
+# Project name, used to generate `screen` names (`screen` is a command-line window manager)
+project: srcds
+
+# Full path to server files                     (can be overridden on a server level)
+path: /home/srcds/l4d2server
+
+# Public IP address (def. 127.0.0.1)            (can be overridden on a server level)
+ip: 1.1.0.0
+
+# `+map` launch parameter                       (can be overridden on a server level)
+map: c1m1_hotel
+
+# Launch parameters                             (can be overridden on a server level)
+params: +maxplayers 32 -tickrate 100 -frametime 0.037 -frametime_override 0.037 -norestart
+
+# `nice` value for the process (def. none)      (can be overridden on a server level)
+niceness: -20
+
+# List of servers to manage
+servers:
+    # Server Port (required)
+  - port: 27015
+
+    # Zero-indexed CPU core num to assign the process to with `taskset` (def. none). Make sure to check available cores with `cat /proc/cpuinfo`.
+    # It's always a good idea to assign your server to a specific core to avoid CFS from switching CPU cores for the process.
+    core: 0
+
+    # Additional launch params that will be appended to the `params` string
+    params_add: sv_tags "\"mycoolserver1\""
+    # path:
+    # ip:
+    # map:
+    # niceness:
+  - port: 27016
+    core: 1
