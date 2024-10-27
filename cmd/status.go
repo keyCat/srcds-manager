@@ -33,7 +33,7 @@ var statusCmd = &cobra.Command{
 		})
 		t.AppendHeader(table.Row{"#", "Running", "Reachable", "Host", "Players", "Map", "Version"})
 		for _, server := range config.Value.Servers {
-			err, info := a2s_query.GetServerInfo(server)
+			info, err := a2s_query.GetServerInfo(server)
 			reachableLabel := text.FgRed.Sprintf("✗")
 			runningLabel := text.FgRed.Sprintf("✗")
 			hostname := "<UNREACHABLE>"

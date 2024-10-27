@@ -23,7 +23,6 @@ var stopCommand = &cobra.Command{
 		return err
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		//config.ReadOrThrow()
 		var serverNumbers []int
 		force, _ := cmd.Flags().GetBool("force")
 		serverNumbers, _ = parsers.ParseAsServerNum(args)

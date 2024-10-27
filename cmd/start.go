@@ -4,6 +4,7 @@ import (
 	"github.com/keyCat/srcds-manager/cmd/parsers"
 	"github.com/keyCat/srcds-manager/config"
 	"github.com/keyCat/srcds-manager/lifecycle"
+	"github.com/keyCat/srcds-manager/screen"
 	"github.com/keyCat/srcds-manager/utils"
 	"github.com/spf13/cobra"
 	"log"
@@ -33,6 +34,9 @@ var startCommand = &cobra.Command{
 					log.Printf("%v\n", err)
 				}
 			}
+		}
+		if screen.CountRunningServers() > 0 {
+			lifecycle.StartIdlerMonitor()
 		}
 	},
 }

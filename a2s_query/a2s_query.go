@@ -7,16 +7,14 @@ import (
 	"time"
 )
 
-func GetServerInfo(server config.Server) (error, *a2s.ServerInfo) {
+func GetServerInfo(server config.Server) (*a2s.ServerInfo, error) {
 	var client, err = a2s.NewClient(
 		fmt.Sprintf("%s:%d", server.Ip, server.Port),
 		a2s.TimeoutOption(time.Second*1),
 	)
 	if err != nil {
-		return err, nil
+		return nil, err
 	}
 	defer client.Close()
-
-	info, err := client.QueryInfo()
-	return err, info
+	return client.QueryInfo()
 }

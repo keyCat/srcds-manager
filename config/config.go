@@ -34,7 +34,8 @@ type Server struct {
 }
 
 type Idler struct {
-	Enabled *bool `yaml:"enabled",omitempty`
+	Enabled  *bool `yaml:"enabled",omitempty`
+	Niceness *int  `yaml:"niceness",omitempty`
 }
 
 // Path current config file path
@@ -44,15 +45,17 @@ var Path = GetDefaultLocation()
 var Value = Root{}
 
 var defaults = struct {
-	Project      string
-	Ip           string
-	Niceness     int
-	IdlerEnabled bool
+	Project       string
+	Ip            string
+	Niceness      int
+	IdlerEnabled  bool
+	IdlerNiceness int
 }{
-	Project:      "srcds-server",
-	Ip:           "127.0.0.1",
-	Niceness:     0,
-	IdlerEnabled: false,
+	Project:       "srcds-server",
+	Ip:            "127.0.0.1",
+	Niceness:      0,
+	IdlerEnabled:  false,
+	IdlerNiceness: -20,
 }
 
 // GetDefaultLocation returns default location and name for the config file (~/srcds.yaml)
@@ -131,6 +134,9 @@ func setDefaults(cfg *Root) *Root {
 	if cfg.Idler.Enabled == nil {
 		cfg.Idler.Enabled = &defaults.IdlerEnabled
 	}
+	if cfg.Idler.Niceness == nil {
+		cfg.Idler.Niceness = &defaults.IdlerNiceness
+	}
 	if cfg.Niceness == nil {
 		cfg.Niceness = &defaults.Niceness
 	}
@@ -156,6 +162,9 @@ func setDefaults(cfg *Root) *Root {
 		}
 		if server.Idler.Enabled == nil {
 			server.Idler.Enabled = cfg.Idler.Enabled
+		}
+		if server.Idler.Niceness == nil {
+			server.Idler.Niceness = cfg.Idler.Niceness
 		}
 		cfg.Servers[i] = server
 	}

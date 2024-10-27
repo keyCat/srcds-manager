@@ -5,6 +5,7 @@ import (
 	"github.com/keyCat/srcds-manager/config"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 )
 
@@ -58,4 +59,11 @@ func DeleteStartScriptForServer(server config.Server) {
 
 func GetStartScriptPathForServer(server config.Server) string {
 	return filepath.Join(server.Path, fmt.Sprintf("/srcds%02d.sh", server.Number))
+}
+
+func FatalIfCommandIsNotAvailable(command string) {
+	_, err := exec.LookPath(command)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }

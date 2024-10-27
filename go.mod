@@ -3,6 +3,7 @@ module github.com/keyCat/srcds-manager
 go 1.21.3
 
 require (
+	github.com/andygrunwald/vdf v1.1.0 // indirect
 	github.com/go-yaml/yaml v2.1.0+incompatible // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.4.9 // indirect

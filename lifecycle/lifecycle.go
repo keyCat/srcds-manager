@@ -8,6 +8,7 @@ import (
 	"github.com/keyCat/srcds-manager/screen"
 	"github.com/keyCat/srcds-manager/utils"
 	"log"
+	"os"
 )
 
 func StartServer(server config.Server, force bool) (bool, error) {
@@ -19,7 +20,7 @@ func StartServer(server config.Server, force bool) (bool, error) {
 		err = screen.StartForServer(server)
 		started = err == nil
 	} else if screen.IsRunningForServer(server) {
-		log.Printf("server %02d (%s:%d) is already running\n", server.Number, server.Ip, server.Port)
+		log.Printf("server #%02d (%s:%d) is already running\n", server.Number, server.Ip, server.Port)
 	} else {
 		utils.WriteStartScriptForServer(server)
 		err = screen.StartForServer(server)
@@ -34,6 +35,7 @@ func StartServer(server config.Server, force bool) (bool, error) {
 
 	return started, nil
 }
+
 func StopServer(server config.Server, force bool) (bool, error) {
 	var stopped = false
 	if force {
@@ -45,7 +47,7 @@ func StopServer(server config.Server, force bool) (bool, error) {
 		log.Printf("server #%02d (%s:%d) is not running", server.Number, server.Ip, server.Port)
 		stopped = true
 	} else {
-		err, info := a2s_query.GetServerInfo(server)
+		info, err := a2s_query.GetServerInfo(server)
 		if err != nil {
 			return false, errors.New(fmt.Sprintf("error stopping server #%02d (%s:%d): %v", server.Number, server.Ip, server.Port, err))
 		}
@@ -60,4 +62,22 @@ func StopServer(server config.Server, force bool) (bool, error) {
 	}
 
 	return stopped, nil
+}
+
+func StartIdlerMonitor() {
+	screenName := fmt.Sprintf("%s-idlermonitor", config.Value.Project)
+	if screen.IsRunning(screenName) {
+		return
+	}
+	exe, _ := os.Executable()
+	screen.Start(screenName, fmt.Sprintf("%s idlermonitor", exe))
+	log.Println("started idler monitor")
+}
+
+func StopIdlerMonitor() {
+	screenName := fmt.Sprintf("%s-idlermonitor", config.Value.Project)
+	if screen.IsRunning(screenName) {
+		screen.Kill(screenName)
+		log.Println("stopped idler monitor")
+	}
 }
