@@ -23,6 +23,12 @@ params: +maxplayers 32 -tickrate 100 -frametime 0.037 -frametime_override 0.037 
 # `nice` value for the process (def. none)      (can be overridden on a server level)
 niceness: -20
 
+idler:
+  # launch "idler" process on the same CPU core as the server process to keep it busy (default: false)
+  enabled: false
+  # set the `nice` value for the "idler" process (def. none)
+  niceness: 19
+
 # List of servers to manage
 servers:
     # Server Port (required)
