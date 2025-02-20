@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 	},
 	Long: `This command helps to manage the state of multiple running servers by facilitating tasks of starting, restarting and updating servers.
 
-Version: 1.1.0  Author: 0x0c  Discord: @choree`,
+Version: 1.1.1  Author: 0x0c  Discord: @choree`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

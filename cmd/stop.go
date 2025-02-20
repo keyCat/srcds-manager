@@ -16,7 +16,7 @@ func init() {
 
 var stopCommand = &cobra.Command{
 	Use:   "stop [1,2-4,6-] [-f]",
-	Short: "Restarts servers. By default, does not attempt to stop unreachable servers or servers with players.",
+	Short: "Stops servers. By default, does not attempt to stop unreachable servers or servers with players.",
 	Args: func(cmd *cobra.Command, args []string) error {
 		// validate server argument
 		_, err := parsers.ParseAsServerNum(args)
